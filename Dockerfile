@@ -9,7 +9,9 @@ WORKDIR /app
 ADD . /app
 
 COPY deps ./
-COPY worker.sh ./
 RUN pip install -r deps/requirements.txt
 
-CMD ./worker.sh
+COPY data ./
+COPY osm-fudge ./
+
+CMD python osm-fudge/amenity-example.py data/monaco-latest.osm.pbf
