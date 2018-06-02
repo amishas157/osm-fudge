@@ -14,7 +14,7 @@ class AmenityListHandler(o.SimpleHandler):
         print("{lon}, {lat}, {tags[amenity]}, {name}")
 
     def node(self, n):
-        if 'amenity' in n.tags:
+        if 'amenity' in n.tags and 'name' in n.tags:
             self.print_amenity(n.tags, n.location.lon, n.location.lat)
 
 
