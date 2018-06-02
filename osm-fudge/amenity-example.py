@@ -11,7 +11,7 @@ class AmenityListHandler(o.SimpleHandler):
 
     def print_amenity(amenity, tags, lon, lat):
         name = tags.get('name', '')
-        print("{lon}, {lat}, {tags[amenity]}, {name}")
+        print("{lon}, {lat}, {tags[amenity]}, {name}".format(lon=lon, lat=lat, tags=tags, name=name))
 
     def node(self, n):
         if 'amenity' in n.tags and 'name' in n.tags:
@@ -20,8 +20,7 @@ class AmenityListHandler(o.SimpleHandler):
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print("Usage: python amenity-example.py <osmfile>")
-        sys.exit(-1)
+        sys.exit("Usage: python amenity-example.py <osmfile>")
 
     handler = AmenityListHandler()
 
