@@ -13,6 +13,9 @@ class BKTree:
         self.distanceMetrics = distanceMetrics
 
     def insert(self, str1, subtree):
+        self.__insert(str1, subtree)
+
+    def __insert(self, str1, subtree):
         root = list(subtree.keys())[0]
         dist = self.distanceMetrics(root, str1)
 
