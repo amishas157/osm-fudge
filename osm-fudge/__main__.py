@@ -1,10 +1,12 @@
 import bk_tree
 import sys
 
+import levenshtein
+
 with open(sys.argv[1], 'r') as file:
 
 	initial_word = file.readline()
-	tree_obj = bk_tree.BKTree(initial_word)
+	tree_obj = bk_tree.BKTree(initial_word, levenshtein.find_levenshtein_distance)
 
 	for line in file: 
 		if len(line) > 1:

@@ -3,19 +3,18 @@
 More: https://en.wikipedia.org/wiki/BK-tree
 '''
 
-import levenshtein
-
 class BKTree:
     '''A bk-tree implementation and defined user methods
        for insertion and querying the string
     '''
 
-    def __init__(self, root):
+    def __init__(self, root, distanceMetrics):
         self.tree = {root: {}}
+        self.distanceMetrics = distanceMetrics
 
     def insert(self, str1, subtree):
         root = list(subtree.keys())[0]
-        dist = levenshtein.find_levenshtein_distance(root, str1)
+        dist = self.distanceMetrics(root, str1)
 
         if (dist in subtree[root]):
             self.insert(str1, subtree[root][dist])
@@ -24,7 +23,7 @@ class BKTree:
 
     def lookup(self, str1, subtree, tolerance, results):
         root = list(subtree.keys())[0]
-        dist = levenshtein.find_levenshtein_distance(root, str1)
+        dist = self.distanceMetrics(root, str1)
 
         if (dist <= tolerance):
             results.append(root)
