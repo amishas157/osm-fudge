@@ -30,12 +30,12 @@ class BKTree:
         root = list(subtree.keys())[0]
         dist = self.distanceMetrics(root, str1)
 
-        if (dist <= tolerance):
+        if dist <= tolerance:
             results.append(root)
 
         minimum = max([0, dist - tolerance])
         maximum = dist + tolerance
 
         for d in range(minimum, maximum + 1):
-            if (d in subtree[root]):
+            if d in subtree[root]:
                 self.lookup(str1, subtree[root][d], tolerance, results)
