@@ -16,6 +16,8 @@ class BKTree:
         self.__insert(str1, subtree)
 
     def __insert(self, str1, subtree):
+        if not subtree or not subtree.keys() or len(subtree.keys()) == 0:
+            return
         root = list(subtree.keys())[0]
         dist = self.distanceMetrics(root, str1)
 
