@@ -21,7 +21,7 @@ class BKTree:
         root = list(subtree.keys())[0]
         dist = self.distanceMetrics(root, str1)
 
-        if (dist in subtree[root]):
+        if dist in subtree[root]:
             self.insert(str1, subtree[root][dist])
         else:
             subtree[root][dist] = {str1: {}}
