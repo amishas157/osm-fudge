@@ -23,11 +23,14 @@ class BKTree:
         dist = self.distanceMetrics(root, str1, self.options)
 
         if dist in subtree[root]:
-            self.insert(str1, subtree[root][dist])
+            self.__insert(str1, subtree[root][dist])
         else:
             subtree[root][dist] = {str1: {}}
 
-    def lookup(self, str1, subtree, tolerance, results):
+    def lookup(self, str1, tolerance, results):
+        self.__lookup(str1, self.tree, tolerance, results)
+
+    def __lookup(self, str1, subtree, tolerance, results):
         root = list(subtree.keys())[0]
         dist = self.distanceMetrics(root, str1, self.options)
 
@@ -39,4 +42,4 @@ class BKTree:
 
         for d in range(minimum, maximum + 1):
             if d in subtree[root]:
-                self.lookup(str1, subtree[root][d], tolerance, results)
+                self.__lookup(str1, subtree[root][d], tolerance, results)

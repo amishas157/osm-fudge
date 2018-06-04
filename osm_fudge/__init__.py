@@ -25,7 +25,7 @@ def main():
 				tree_obj.insert(line.strip())
 
 		results = []
-		tree_obj.lookup('parking', tree_obj.tree, 8, results)
+		tree_obj.lookup('parking', 8, results)
 
 		print(results)
 
