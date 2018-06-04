@@ -1,8 +1,8 @@
 import argparse
 
-import bk_tree
-import levenshtein
-import jaccard
+from osm_fudge.index import bk_tree
+from osm_fudge.metrics import levenshtein
+from osm_fudge.metrics import jaccard
 
 distance_metrics = {
 	'levenshtein': levenshtein.find_levenshtein_distance,

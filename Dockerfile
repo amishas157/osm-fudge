@@ -15,5 +15,5 @@ RUN pip3 install -r deps/requirements.txt
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
-COPY osm-fudge ./
+COPY osm_fudge ./
 CMD ./worker.sh
