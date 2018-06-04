@@ -22,7 +22,7 @@ def main():
 
 		for line in file:
 			if len(line) > 1:
-				tree_obj.insert(line.strip(), tree_obj.tree)
+				tree_obj.insert(line.strip())
 
 		results = []
 		tree_obj.lookup('parking', tree_obj.tree, 8, results)

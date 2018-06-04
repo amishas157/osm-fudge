@@ -13,8 +13,8 @@ class BKTree:
         self.distanceMetrics = distanceMetrics
         self.options = options
 
-    def insert(self, str1, subtree):
-        self.__insert(str1, subtree)
+    def insert(self, item):
+        self.__insert(item, self.tree)
 
     def __insert(self, str1, subtree):
         if not subtree or not subtree.keys() or len(subtree.keys()) == 0:
