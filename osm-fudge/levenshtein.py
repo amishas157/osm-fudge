@@ -8,7 +8,7 @@ More: https://en.wikipedia.org/wiki/Levenshtein_distance
 import numpy as np
 import argparse
 
-def find_levenshtein_distance(str1, str2):
+def find_levenshtein_distance(str1, str2, options):
     '''Returns levenshtein distance between two strings
 
     Args:

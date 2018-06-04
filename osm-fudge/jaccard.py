@@ -8,12 +8,12 @@ More: https://en.wikipedia.org/wiki/Jaccard_index
 import n_gram
 import argparse
 
-def find_jaccard_similarity(n, str1, str2):
-    a = n_gram.find_n_grams(n, str1)
-    b = n_gram.find_n_grams(n, str2)
+def find_jaccard_similarity(str1, str2, options):
+    a = n_gram.find_n_grams(options['n'], str1)
+    b = n_gram.find_n_grams(options['n'], str2)
     common = list(set(a) & set(b))
     union = list(set(a) | set(b))
-    return len(common) / len(union)
+    return round(((len(common) / len(union)) * 100))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Finds jaccard distance between n-grams of two given strings')

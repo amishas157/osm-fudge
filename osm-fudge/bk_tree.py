@@ -8,9 +8,10 @@ class BKTree:
        for insertion and querying the string
     '''
 
-    def __init__(self, root, distanceMetrics):
+    def __init__(self, root, distanceMetrics, options):
         self.tree = {root: {}}
         self.distanceMetrics = distanceMetrics
+        self.options = options
 
     def insert(self, str1, subtree):
         self.__insert(str1, subtree)
@@ -19,7 +20,7 @@ class BKTree:
         if not subtree or not subtree.keys() or len(subtree.keys()) == 0:
             return
         root = list(subtree.keys())[0]
-        dist = self.distanceMetrics(root, str1)
+        dist = self.distanceMetrics(root, str1, self.options)
 
         if dist in subtree[root]:
             self.insert(str1, subtree[root][dist])
@@ -28,7 +29,7 @@ class BKTree:
 
     def lookup(self, str1, subtree, tolerance, results):
         root = list(subtree.keys())[0]
-        dist = self.distanceMetrics(root, str1)
+        dist = self.distanceMetrics(root, str1, self.options)
 
         if dist <= tolerance:
             results.append(root)
