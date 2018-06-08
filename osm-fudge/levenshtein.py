@@ -17,7 +17,7 @@ def find_levenshtein_distance(str1, str2):
 
     Returns:
       The minimum number of single-character edits (insertions, deletions or substitutions)
-      required source string to  destination string
+      required source string to destination string
     '''
 
     m = len(str1)
