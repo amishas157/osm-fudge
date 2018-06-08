@@ -1,5 +1,6 @@
 import argparse
 import sys
+from functools import partial
 
 from osm_fudge.index import bk_tree
 from osm_fudge.metrics import levenshtein
@@ -21,7 +22,7 @@ def main():
 			sys.exit('Input file is empty')
 		metrics = args.metrics
 		options = {'n' : 2}
-		tree_obj = bk_tree.BKTree(initial_word, distance_metrics[metrics], options)
+		tree_obj = bk_tree.BKTree(initial_word, partial(distance_metrics[metrics], options=options))
 
 		for line in file:
 			if len(line) > 1:
