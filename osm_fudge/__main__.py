@@ -1,4 +1,5 @@
 import argparse
+import sys
 
 from osm_fudge.index import bk_tree
 from osm_fudge.metrics import levenshtein
@@ -16,6 +17,8 @@ def main():
 	args = parser.parse_args()
 	with open(args.input, 'r') as file:
 		initial_word = file.readline()
+		if not initial_word:
+			sys.exit('Input file is empty')
 		metrics = args.metrics
 		options = {'n' : 2}
 		tree_obj = bk_tree.BKTree(initial_word, distance_metrics[metrics], options)
