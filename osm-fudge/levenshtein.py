@@ -5,7 +5,8 @@ Find similarity two given strings using levenshtein distance
 More: https://en.wikipedia.org/wiki/Levenshtein_distance
 '''
 
-import sys
+import numpy as np
+import argparse
 
 def find_levenshtein_distance(str1, str2):
     '''Returns levenshtein distance between two strings
@@ -22,7 +23,7 @@ def find_levenshtein_distance(str1, str2):
     m = len(str1)
     n = len(str2)
 
-    d = [[0 for j in range(n + 1)] for i in range(m + 1)]
+    d = np.zeros((m + 1, n + 1), dtype=int)
     for i in range(m + 1):
         d[i][0] = i;
     for j in range(n + 1):
@@ -40,5 +41,10 @@ def find_levenshtein_distance(str1, str2):
 
 
 if __name__ == "__main__":
-    distance = find_levenshtein_distance(sys.argv[1], sys.argv[2])
+    parser = argparse.ArgumentParser(description='Finds levenshtein distance between two given strings')
+    parser.add_argument('--x', type=str, required=True, help='source string')
+    parser.add_argument('--y', type=str, required=True, help='destination string')
+    args = parser.parse_args()
+
+    distance = find_levenshtein_distance(args.x, args.y)
     print(distance)
