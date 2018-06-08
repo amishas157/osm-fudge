@@ -1,3 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-echo "hello world"
+wget ${PBF_URL} -O data.pbf
+python3 osm-fudge/amenities.py data.pbf
