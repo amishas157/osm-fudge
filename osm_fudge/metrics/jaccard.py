@@ -6,7 +6,7 @@ More: https://en.wikipedia.org/wiki/Jaccard_index
 '''
 
 import argparse
-from osm_fudge.metrics import n_gram
+import n_gram
 
 def find_jaccard_similarity(str1, str2, options):
     a = n_gram.find_n_grams(options['n'], str1)
