@@ -17,12 +17,9 @@ def main():
 	parser.add_argument('--metrics', type=str, choices=distance_metrics.keys(), required=True, help='Input file for creating index')
 	args = parser.parse_args()
 	with open(args.input, 'r') as file:
-		initial_word = file.readline()
-		if not initial_word:
-			sys.exit('Input file is empty')
 		metrics = args.metrics
 		options = {'n' : 2}
-		tree_obj = bk_tree.BKTree(initial_word, partial(distance_metrics[metrics], options=options))
+		tree_obj = bk_tree.BKTree(partial(distance_metrics[metrics], options=options))
 
 		for line in file:
 			if len(line) > 1:
