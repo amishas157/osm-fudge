@@ -28,8 +28,8 @@ class BKTree:
         else:
             subtree[root][dist] = {str1: {}}
 
-    def lookup(self, str1, tolerance):
-        return self.__lookup(str1, self.tree, tolerance)
+    def lookup(self, item, max_distance=None):
+        return self.__lookup(item, self.tree, max_distance)
 
     def __lookup(self, str1, subtree, tolerance):
         root = list(subtree.keys())[0]
