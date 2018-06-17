@@ -5,7 +5,7 @@ Extract all objects with an amenity tag from an osm file and list them
 with their name and position.
 """
 import osmium as o
-import sys
+import argparse
 
 class AmenityListHandler(o.SimpleHandler):
 
@@ -19,9 +19,9 @@ class AmenityListHandler(o.SimpleHandler):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        sys.exit("Usage: python amenity-example.py <osmfile>")
+    parser = argparse.ArgumentParser(description='Collects data from osm pbf file')
+    parser.add_argument('--input', type=str, required=True, help='File for creating input data')
+    args = parser.parse_args()
 
     handler = AmenityListHandler()
-
-    handler.apply_file(sys.argv[1])
+    handler.apply_file(args.input)
