@@ -8,7 +8,9 @@ More: https://en.wikipedia.org/wiki/N-gram
 import argparse
 
 def find_n_grams(n, str):
-	assert n > 0 and n <= len(str)
+	assert n > 0
+	if n > len(str):
+		return []
 	return [str[i:i+n] for i in range(len(str) - (n-1))]
 
 if __name__ == "__main__":
