@@ -45,11 +45,10 @@ class BKTree:
 
                 if dist <= tolerance:
                     results.append(tree_string)
+                    yield tree_string
                     minimum = max([0, dist - tolerance])
                     maximum = dist + tolerance
 
                     for d in range(minimum, maximum + 1):
                         if d in element[tree_string].keys():
                             stack.append(element[tree_string][d])
-
-        return results
