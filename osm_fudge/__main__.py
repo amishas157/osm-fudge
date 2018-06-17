@@ -25,10 +25,7 @@ def main():
 			if len(line) > 1:
 				tree_obj.insert(line.strip())
 
-		results = []
-		tree_obj.lookup('parking', 8, results)
-
-		print(results)
+		print(tree_obj.lookup('parking', 8))
 
 if __name__ == "__main__":
 	main()
