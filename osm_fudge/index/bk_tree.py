@@ -34,7 +34,6 @@ class BKTree:
     def __lookup(self, str1, subtree, tolerance):
         root = list(subtree.keys())[0]
 
-        results = []
         stack = []
         stack.append(subtree)
 
@@ -44,7 +43,6 @@ class BKTree:
                 dist = self.distanceMetrics(tree_string, str1)
 
                 if dist <= tolerance:
-                    results.append(tree_string)
                     yield tree_string
                     minimum = max([0, dist - tolerance])
                     maximum = dist + tolerance
