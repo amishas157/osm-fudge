@@ -38,7 +38,7 @@ class BKTree:
         stack = []
         stack.append(subtree)
 
-        while len(stack) > 0:
+        while stack:
             element = stack.pop()
             for tree_string in element.keys():
                 dist = self.distanceMetrics(tree_string, str1)
