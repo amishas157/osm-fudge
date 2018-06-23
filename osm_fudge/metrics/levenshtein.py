@@ -8,6 +8,7 @@ More: https://en.wikipedia.org/wiki/Levenshtein_distance
 import numpy as np
 import argparse
 
+
 def find_levenshtein_distance(str1, str2):
     '''Returns levenshtein distance between two strings
 
@@ -25,9 +26,9 @@ def find_levenshtein_distance(str1, str2):
 
     d = np.zeros((m + 1, n + 1), dtype=int)
     for i in range(m + 1):
-        d[i][0] = i;
+        d[i][0] = i
     for j in range(n + 1):
-        d[0][j] = j;
+        d[0][j] = j
 
     for j in range(n):
         for i in range(m):
@@ -35,7 +36,7 @@ def find_levenshtein_distance(str1, str2):
                 cost = 0
             else:
                 cost = 1
-            d[i+1][j+1] = min([d[i][j+ 1] + 1, d[i+1][j] + 1, d[i][j] + cost])
+            d[i+1][j+1] = min([d[i][j + 1] + 1, d[i+1][j] + 1, d[i][j] + cost])
 
     return(d[m][n])
 

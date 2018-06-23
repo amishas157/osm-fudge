@@ -8,11 +8,13 @@ More: https://en.wikipedia.org/wiki/Jaccard_index
 import argparse
 from osm_fudge.metrics import n_gram
 
+
 def find_jaccard_similarity(str1, str2, options):
     a = n_gram.find_n_grams(options['n'], str1)
     b = n_gram.find_n_grams(options['n'], str2)
     common = list(set(a) & set(b))
     return round(((len(common) / (len(str1) + len(str2) - len(common))) * 100))
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Finds jaccard distance between n-grams of two given strings')

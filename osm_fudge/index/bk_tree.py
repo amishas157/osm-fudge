@@ -3,6 +3,7 @@
 More: https://en.wikipedia.org/wiki/BK-tree
 '''
 
+
 class BKTree:
     '''A bk-tree implementation and defined user methods
        for insertion and querying the string
@@ -32,8 +33,6 @@ class BKTree:
         return self.__lookup(item, self.tree, max_distance)
 
     def __lookup(self, str1, subtree, tolerance):
-        root = list(subtree.keys())[0]
-
         stack = []
         stack.append(subtree)
 
