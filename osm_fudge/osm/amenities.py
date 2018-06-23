@@ -7,6 +7,7 @@ with their name and position.
 import osmium as o
 import argparse
 
+
 class AmenityListHandler(o.SimpleHandler):
 
     def print_amenity(amenity, tags, lon, lat):
