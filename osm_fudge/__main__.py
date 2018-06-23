@@ -12,6 +12,12 @@ distance_metrics = {
 	'jaccard': jaccard.find_jaccard_similarity
 }
 
+def distance_metrics_method(metrics, options):
+	if metrics == 'jaccard':
+		return partial(distance_metrics[metrics], options=options)
+	else:
+		return distance_metrics[metrics]
+
 def main():
 	parser = argparse.ArgumentParser(description='Indexes OSM data in a bk-tree')
 	parser.add_argument('--input', type=str, required=True, help='Input file for creating index')
@@ -22,7 +28,7 @@ def main():
 	with open(args.input, 'r') as file:
 		metrics = args.metrics
 		options = {'n' : 2}
-		tree_obj = bk_tree.BKTree(partial(distance_metrics[metrics], options=options))
+		tree_obj = bk_tree.BKTree(distance_metrics_method(metrics, options))
 
 		for line in file:
 			if len(line) > 1:
