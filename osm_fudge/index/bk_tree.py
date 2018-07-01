@@ -6,6 +6,7 @@ More: https://en.wikipedia.org/wiki/BK-tree
 from recordclass import recordclass
 from bisect import bisect_left
 from bisect import bisect_right
+import pydot
 
 Node = recordclass('Node', ['value', 'edges', 'children'])
 
@@ -84,3 +85,22 @@ class BKTree:
                 for index, edge in enumerate(node.edges):
                     if edge >= minimum and edge <= maximum:
                         stack.append(node.children[index])
+
+    def print(self):
+        graph = pydot.Dot(graph_type='digraph')
+
+        stack = []
+        stack.append(self.root)
+
+        while stack:
+            node = stack.pop()
+            if len(node.children):
+                parent_node = pydot.Node(node.value)
+                graph.add_node(parent_node)
+                for index, child in enumerate(node.children):
+                    child_node = pydot.Node(child.value)
+                    graph.add_node(child_node)
+                    graph.add_edge(pydot.Edge(parent_node, child_node, label=node.edges[index]))
+                    stack.append(child)
+
+        graph.write_png('graph.png')

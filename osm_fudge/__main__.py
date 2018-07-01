@@ -45,6 +45,7 @@ def main():
             sys.exit("Error: Empty input file")
 
         tree_obj.freeze()
+        tree_obj.print()
         if args.query_strings:
             for query_string in args.query_strings.split(','):
                 gen = tree_obj.nearest(query_string.strip(), max_distance=args.max_distance)
