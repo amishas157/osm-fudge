@@ -3,9 +3,26 @@
 More: https://en.wikipedia.org/wiki/BK-tree
 '''
 
+from recordclass import recordclass
+from bisect import bisect_left
+from bisect import bisect_right
 
-def grouped(iterable, n):
-    return zip(*[iter(iterable)]*n)
+Node = recordclass('Node', ['value', 'edges', 'children'])
+
+
+def binary_search(values, min_value, max_value, lo=0, hi=None):
+    hi = (hi if hi is not None else len(values))
+    pos = bisect_left(values, min_value, lo, hi)
+    if pos == hi:
+        return -1, -1
+    else:
+        minimum = pos
+
+    lo = minimum
+    pos = bisect_right(values, max_value, lo, hi)
+    maximum = (pos if pos != hi else hi)
+
+    return minimum, maximum
 
 
 class BKTree:
@@ -14,77 +31,54 @@ class BKTree:
     '''
 
     def __init__(self, distanceMetrics):
-        self.tree = [[]]
         self.distanceMetrics = distanceMetrics
+        self.root = None
+        self.sorted = False
 
-    def insert_bk_element(self, level_index, str, dist):
-        self.tree[level_index].append(dist)
-        self.tree[level_index + 1].append(str)
-        sibling_index = self.tree[level_index + 1].index(str)
-        empty_child_index = level_index + (2 * (sibling_index + 1))
-        self.append_empty_child(empty_child_index)
+    def __insert(self, node, value):
+        dist = self.distanceMetrics(node.value, value)
+        if dist in node.edges:
+            self.__insert(node.children[node.edges.index(dist)], value)
+        else:
+            node.edges.append(dist)
+            node.children.append(Node(value, [], []))
 
-    def append_empty_child(self, index):
-        self.tree.insert(index, [])
-        self.tree.insert(index + 1, [])
+    def insert(self, value):
+        if not self.root:
+            self.root = Node(value, [], [])
+        else:
+            self.__insert(self.root, value)
+        self.sorted = False
 
-    def insert(self, item):
-        self.__insert(item, 0, 0)
-        print(self.tree)
+    def __sort(self, node):
+        if len(node.edges):
+            node.edges, node.children = (list(t) for t in zip(*sorted(zip(node.edges, node.children))))
+            for child in node.children:
+                self.__sort(child)
+        return
 
-    def __insert(self, str1, level_index, sibling_index):
-        if len(self.tree[0]) == 0:
-            self.tree[0].append(str1)
-            self.append_empty_child(1)
-            return
+    def freeze(self):
+        self.__sort(self.root)
+        self.sorted = True
 
-        tree_element = self.tree[level_index][sibling_index]
-        dist = self.distanceMetrics(tree_element, str1)
+    def nearest(self, value, max_distance=None):
+        assert self.root
 
-        for indexes, strings in grouped(self.tree[level_index + (2 * (sibling_index + 1)) - 1:], 2):
-            if dist in indexes:
-                self.__insert(str1, level_index + (2 * len(self.tree[level_index])), indexes.index(dist))
-                break
-            else:
-                insert_index = level_index + (2 * (sibling_index + 1)) - 1
-                self.insert_bk_element(insert_index, str1, dist)
-                break
-
-    def lookup(self, item, max_distance=None):
-        return self.__lookup(item, max_distance)
-
-    def __lookup(self, str1, tolerance):
         stack = []
-        stack.append(self.tree)
-
-        index = 0
-        start = 0
-        end = 0
+        stack.append(self.root)
 
         while stack:
-            element = stack.pop()
-            for i in range(start, end):
-                tree_string = element[index][i]
-                dist = self.distanceMetrics(tree_string, str1)
+            node = stack.pop()
+            dist = self.distanceMetrics(value, node.value)
+            if dist <= max_distance:
+                yield node.value
+                minimum = max([0, dist - max_distance])
+                maximum = dist + max_distance
 
-                if dist <= tolerance:
-                    yield tree_string
-                    minimum = max([0, dist - tolerance])
-                    maximum = dist + tolerance
-
-                    start = 0
-                    end = len(element[index + 1] - 1)
-                    index = index + (2 * len(element[index]))
-                    stack.append(element)
-
-            # for tree_string in element.keys():
-            #     dist = self.distanceMetrics(tree_string, str1)
-
-            #     if dist <= tolerance:
-            #         yield tree_string
-            #         minimum = max([0, dist - tolerance])
-            #         maximum = dist + tolerance
-
-            #         for d in range(minimum, maximum + 1):
-            #             if d in element[tree_string].keys():
-            #                 stack.append(element[tree_string][d])
+                if self.sorted:
+                    min_index, max_index = binary_search(node.edges, minimum, maximum, 0, len(node.edges))
+                    stack.extend(node.children[min_index:max_index])
+                else:
+                    for index, edge in enumerate(node.edges):
+                        if edge >= minimum and edge <= maximum:
+                            stack.append(node.children[index])

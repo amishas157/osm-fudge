@@ -37,7 +37,8 @@ def main():
             if len(line) > 1:
                 tree_obj.insert(line.strip())
 
-        gen = tree_obj.lookup('darlign', max_distance=args.max_distance)
+        tree_obj.freeze()
+        gen = tree_obj.nearest('darlign', max_distance=args.max_distance)
         if args.max_results:
             print(list(itertools.islice(gen, args.max_results)))
         else:
