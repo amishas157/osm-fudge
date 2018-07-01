@@ -70,15 +70,17 @@ class BKTree:
         while stack:
             node = stack.pop()
             dist = self.distanceMetrics(value, node.value)
+
             if dist <= max_distance:
                 yield node.value
-                minimum = max([0, dist - max_distance])
-                maximum = dist + max_distance
 
-                if self.sorted:
-                    min_index, max_index = binary_search(node.edges, minimum, maximum, 0, len(node.edges))
-                    stack.extend(node.children[min_index:max_index])
-                else:
-                    for index, edge in enumerate(node.edges):
-                        if edge >= minimum and edge <= maximum:
-                            stack.append(node.children[index])
+            minimum = max([0, dist - max_distance])
+            maximum = dist + max_distance
+
+            if self.sorted:
+                min_index, max_index = binary_search(node.edges, minimum, maximum, 0, len(node.edges))
+                stack.extend(node.children[min_index:max_index])
+            else:
+                for index, edge in enumerate(node.edges):
+                    if edge >= minimum and edge <= maximum:
+                        stack.append(node.children[index])

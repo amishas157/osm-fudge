@@ -1,6 +1,7 @@
 import argparse
 from functools import partial
 import itertools
+import sys
 
 from osm_fudge.index import bk_tree
 from osm_fudge.metrics import levenshtein
@@ -37,8 +38,11 @@ def main():
             if len(line) > 1:
                 tree_obj.insert(line.strip())
 
+        if tree_obj.root is None:
+            sys.exit("Error: Empty input file")
+
         tree_obj.freeze()
-        gen = tree_obj.nearest('darlign', max_distance=args.max_distance)
+        gen = tree_obj.nearest('Parking de la', max_distance=args.max_distance)
         if args.max_results:
             print(list(itertools.islice(gen, args.max_results)))
         else:
