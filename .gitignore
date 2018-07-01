@@ -1,0 +1,5 @@
+# pbf file
+*.osm.pbf
+
+# osm data file
+*.txt

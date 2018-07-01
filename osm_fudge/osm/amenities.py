@@ -7,11 +7,12 @@ with their name and position.
 import osmium as o
 import argparse
 
+
 class AmenityListHandler(o.SimpleHandler):
 
     def print_amenity(amenity, tags, lon, lat):
         name = tags.get('name', '')
-        print("{lon}, {lat}, {tags[amenity]}, {name}".format(lon=lon, lat=lat, tags=tags, name=name))
+        print("{name}".format(name=name))
 
     def node(self, n):
         if 'amenity' in n.tags and 'name' in n.tags:

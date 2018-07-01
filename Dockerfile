@@ -6,14 +6,14 @@ RUN apt-get update -qq && \
     python3 python3-pip python3-setuptools python3-dev libboost-python-dev
 
 
+COPY deps /deps
+RUN pip3 install -r deps/requirements.txt
+
 WORKDIR /app
 ADD . /app
-
-COPY deps ./
-RUN pip3 install -r deps/requirements.txt
 
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
-COPY osm-fudge ./
+COPY osm_fudge ./
 CMD ./worker.sh
